@@ -7,7 +7,7 @@
 ### **Objective:** Create a landing web page for a fictitious Bank called 'Bankist'
 
 - Explore advanced DOM Events
-  - Lazy loading images
+  - Make multiple instances of similar event listeners from a queryselectorAll node list via forEach() method
 
 &emsp;
 
