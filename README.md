@@ -4,13 +4,14 @@
 
 ## Udemy The Complete JavaScript Course 2022 From Zero to Expert! by Jonas Schmedtmann
 
-### **Objective:** Create a web page for a fictitious Bank called 'Bankist'
+### **Objective:** Create a landing web page for a fictitious Bank called 'Bankist'
 
 - Explore advanced DOM Events
+  - Lazy loading images
 
 &emsp;
 
-#### Link to Project &rarr; [Bankist web page](https://bankist-erhan-ertem.netlify.app)
+#### Link to Project &rarr; [Bankist website](https://bankist-erhan-ertem.netlify.app)
 
 ---
 
