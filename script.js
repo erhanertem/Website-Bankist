@@ -34,3 +34,39 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log('section to scroll to', s1coords); //IMPORTANT: Get the location of the element we want to scroll to
+  //VERY IMPORTANT! RELATIVE TO THE TOP OF BROWSER WINDOW
+
+  // console.log('button that clicked', e.target.getBoundingClientRect());
+  // //IMPORTANT e.target is essentially THE BUTTON GOT CLICKED (btnSCrollTo that function(e) refers to)
+  // //VERY IMPORTANT! RELATIVE TO THE TOP OF BROWSER WINDOW
+  // console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset); //Deprecated by scrollX/scrollY
+  // console.log('Current scroll (X/Y)', window.scrollX, window.scrollY);
+  // //IMPORTANT Tells us how far the browser window has scrolled from the top of the webpage in X/Y directions
+  // //VERY IMPORTANT! ABSOLUTE DISTANCE TO THE TOP OF WEB PAGE
+  // console.log(
+  //   'height/width of viewport',
+  //   document.documentElement.clientHeight,
+  //   document.documentElement.clientWidth
+  // );
+
+  // //Old school smooth Scrolling
+  // // window.scrollTo(
+  // //   s1coords.left + window.scrollX, //pos of the element to the top of window (relative dim) + from the top of the window to actuall top of the web page (absolute dim) = total absolute dim
+  // //   s1coords.top + window.scrollY
+  // // );
+  // window.scrollTo({
+  //   left: s1coords.left + window.scrollX,
+  //   top: s1coords.top + window.scrollY,
+  //   behavior: 'smooth',
+  // });
+
+  // Modern way of smooth scrolling
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
