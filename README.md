@@ -7,7 +7,11 @@
 ### **Objective:** Create a landing web page for a fictitious Bank called 'Bankist'
 
 - Explore advanced DOM Events
-  - Make multiple instances of similar event listeners from a queryselectorAll node list via forEach() method
+  - Make multiple instances of an event listener via queryselectorAll() nodelist and forEach() method
+  - Explore a better alternative of distributing instances of event listeners : Event delegation
+  - Create smooth scrolling link
+    - Old school: getBoundingClientRect(), scrollTo(), window.scrollX/scrollY
+    - Modern Implementation: scrollIntoView()
 
 &emsp;
 
