@@ -1,8 +1,6 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
+//QUERYSELECTORS
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
@@ -10,12 +8,12 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
 
+//EVENTHANDLER MODAL WINDOW
 const openModal = function (e) {
   e.preventDefault(); //IMPORTANT this just makes sure href="#" on the node is ignored
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
 };
-
 const closeModal = function () {
   modal.classList.add('hidden');
   overlay.classList.add('hidden');
@@ -37,7 +35,7 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-//BUTTON LINK SMOOTH SCROLLING
+//EVENTHANDLER BUTTON LINK SMOOTH SCROLLING
 btnScrollTo.addEventListener('click', function (e) {
   // //Old school smooth Scrolling
   // const s1coords = section1.getBoundingClientRect();
@@ -69,7 +67,7 @@ btnScrollTo.addEventListener('click', function (e) {
   section1.scrollIntoView({ behavior: 'smooth' });
 });
 
-//PAGE NAVIGATION SMOOTH SCROLLING
+//EVENTHANDLER PAGE NAVIGATION SMOOTH SCROLLING
 // document.querySelectorAll('.nav__link').forEach(function (navel) {
 //   navel.addEventListener('click', function (e) {
 //     e.preventDefault(); //ignores href elements inside HTML definition
@@ -92,4 +90,31 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     console.log(hrefid);
     document.querySelector(hrefid).scrollIntoView({ behavior: 'smooth' }); // Modern way of smooth scrolling
   }
+});
+
+//EVENTHANDLER TABBED COMPONENT
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  // if (e.target.classList.contains('operations__tab')) {
+  //   const clicked = e.target;
+  //   console.log(clicked);
+  // }
+  //-->SCREEN FOR BTN CLICKS
+  const clicked = e.target.closest('.operations__tab');
+  console.log(clicked);
+  //-->CHECK FOR NULL CLICKS EXCLUDING BTNS
+  if (!clicked) return; //VERY IMPORTANT! GUARD CLAUSE - PREVENTS ERR DUE TO CLICKING OUTSIDE THE BUTTONS BUT STILL INTHE CONTAINER AREA
+  //-->CLEAR CLASS ACTIVE ON ALL BTNS
+  tabs.forEach(el => el.classList.remove('operations__tab--active'));
+  //-->ASSIGN ACTIVE TO BTN CLICKED
+  clicked.classList.add('operations__tab--active');
+  //-->CLEAR CLASS ACTIVE ON ALL CONTENT AREAS
+  tabsContent.forEach(i => i.classList.remove('operations__content--active'));
+  //-->ACTIVATE THE CORRESPONDING CONTENT AREA
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
 });
