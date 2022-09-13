@@ -166,7 +166,7 @@ const navBarContainer = document.querySelector('.nav');
 // #1
 // navBarContainer.addEventListener('mouseover', function (e) {
 //   handleHover(e, 0.5);
-// });
+// }); //VERY IMPORTANT! IN ORDER TO DRY THE CODE MORE, FUNCTION INSIDE THE EVENT HANDLER FUNCTION COULD MAKE USE OF A BIND METHOD WHICH KEEPS THE e BUT BINDS THE OTHER ARGUMENT AS <THIS> IN THE FUNCTION. IN ORDER TO PUSH IN MORE ARGUMENT, BIND COULD PASS IN AN ARRAY [....] FOR MULTIPLE ARGUMENTS AS A WORKAROUND SINCE EVENT HANDLER FUNCTION CAN ONLY HANDLE 1 ARGUMENT AS AN INPUT
 // #2
 navBarContainer.addEventListener('mouseover', handleHover.bind(0.5));
 
