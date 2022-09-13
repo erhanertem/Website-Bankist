@@ -12,6 +12,8 @@ const tabs = document.querySelectorAll('.operations__tab');
 const tabsContent = document.querySelectorAll('.operations__content');
 const navBarContainer = document.querySelector('.nav');
 const header = document.querySelector('.header');
+const allSections = document.querySelectorAll('.section');
+const imgTargets = document.querySelectorAll('img[data-src]');
 
 //FUNCTION MODAL OPEN
 const openModal = function (e) {
@@ -211,9 +213,6 @@ const headerObserver = new IntersectionObserver(stickyNav_callback, {
 headerObserver.observe(header);
 
 //OBSERVER REVEAL SECTION ANIMATIONS
-
-const allSections = document.querySelectorAll('.section');
-
 //--> OBSERVER CALLBACKFUNCTION @ THRESHOLD
 const revealSection_callback = function (entries, observer) {
   const [entry] = entries;
@@ -235,9 +234,6 @@ allSections.forEach(function (section) {
 });
 
 //OBSERVER LAZY LOADING IMAGES
-
-const imgTargets = document.querySelectorAll('img[data-src]');
-
 //--> OBSERVER CALLBACKFUNCTION @ THRESHOLD
 const loadImg_callback = function (entries, observer) {
   const [entry] = entries;
@@ -251,7 +247,6 @@ const loadImg_callback = function (entries, observer) {
     entry.target.classList.remove('lazy-img');
   });
 };
-
 //--> CREATE OBSERVER WITH OPTIONS
 const imgObserver = new IntersectionObserver(loadImg_callback, {
   root: null,
