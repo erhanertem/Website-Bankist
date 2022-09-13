@@ -7,28 +7,35 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContent = document.querySelectorAll('.operations__content');
 
-//EVENTHANDLER MODAL WINDOW
+//FUNCTION MODAL OPEN
 const openModal = function (e) {
   e.preventDefault(); //IMPORTANT this just makes sure href="#" on the node is ignored
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
 };
+
+//FUNCTION MODAL CLOSE
 const closeModal = function () {
   modal.classList.add('hidden');
   overlay.classList.add('hidden');
 };
 
+//EVENTHANDLER MODAL WINDOW
 // console.log(btnsOpenModal);
 //NOTE There are two elements bearing btn--show-modal", one at the top and one at the very bottom of the page. QueryselectorAll() named by btnsOpenModal enlists 2 nodes. We cycle thru them to listen all at the same time if click triggers the modal.
 // for (let i = 0; i < btnsOpenModal.length; i++)
 //   btnsOpenModal[i].addEventListener('click', openModal);
 //Make instances of addEventListeners thruout the page per the node list of queryselectorall()
+//-->WHEN CLICKED ON BTNS, OPEN MODAL
 btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
-
+//-->WHEN CLICKED ON BTN OR ANYPLACE OUTSIDE THE MODAL, CLOSE MODAL
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
-
+//-->WHEN CLICKED ESC AND MODAL IS NOT MARKED HIDDEN, CLOSE MODAL
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
@@ -93,16 +100,14 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 });
 
 //EVENTHANDLER TABBED COMPONENT
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContent = document.querySelectorAll('.operations__content');
 
+//-->WATCH ON CLICKS IN THE REALM OF THE DIV CONTAINER (PARENT) WRAPPING BTNS
 tabsContainer.addEventListener('click', function (e) {
   // if (e.target.classList.contains('operations__tab')) {
   //   const clicked = e.target;
   //   console.log(clicked);
   // }
-  //-->SCREEN FOR BTN CLICKS
+  //-->WORK ALL THE WAY DEEPER TO BTNS AND SCREEN FOR BTN CLICKS VIA CLOSEST
   const clicked = e.target.closest('.operations__tab');
   console.log(clicked);
   //-->CHECK FOR NULL CLICKS EXCLUDING BTNS

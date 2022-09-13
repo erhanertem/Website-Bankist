@@ -8,7 +8,7 @@
 
 - Explore advanced DOM Events
   - Make multiple instances of an event listener via queryselectorAll() nodelist and forEach() method
-  - Explore a better alternative of distributing instances of event listeners : Event delegation
+  - Explore a better alternative of distributing instances of event listeners : Event delegation, closest()
   - Create smooth scrolling link
     - Old school: getBoundingClientRect(), scrollTo(), window.scrollX/scrollY
     - Modern Implementation: scrollIntoView()
