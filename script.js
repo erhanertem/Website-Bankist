@@ -10,6 +10,8 @@ const section1 = document.querySelector('#section--1');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContent = document.querySelectorAll('.operations__content');
+const navBarContainer = document.querySelector('.nav');
+const header = document.querySelector('.header');
 
 //FUNCTION MODAL OPEN
 const openModal = function (e) {
@@ -127,8 +129,7 @@ tabsContainer.addEventListener('click', function (e) {
 
 //FUNCTION MENU FADE ANIMATION
 //THIS IS THE WAY TO GO TO REFACTOR THE CODE BY USING COMMON VARIABLES
-
-// #1 version
+//-->#1 version
 // const handleHover = function (e, opacity) {
 //   if (e.target.classList.contains('nav__link')) {
 //     const hovered = e.target;
@@ -142,8 +143,7 @@ tabsContainer.addEventListener('click', function (e) {
 //     logo.style.opacity = opacity;
 //   }
 // };
-
-// #2 version
+//-->#2 version
 const handleHover = function (e) {
   if (e.target.classList.contains('nav__link')) {
     const hovered = e.target;
@@ -160,8 +160,6 @@ const handleHover = function (e) {
 
 //EVENTHANDLER MENU FADE ANIMATION
 //DESCRIPTION: THE EXTEND OF THE ANIMATION EFFECT INCLUDES THE BANKIST LOGO AND SHOULD WORK ALL THE WAY DOWN TO THE BTNS WITH A FADE IN OUT EFFECT WHEN BTNS ARE HOVERED ON.
-const navBarContainer = document.querySelector('.nav');
-
 //-->WATCH FOR MOUSEOVER IN THE REALM OF THE NAV CONTAINER (PARENT) WRAPPING BTNS
 // #1
 // navBarContainer.addEventListener('mouseover', function (e) {
@@ -177,3 +175,37 @@ navBarContainer.addEventListener('mouseover', handleHover.bind(0.5));
 // });
 // #2
 navBarContainer.addEventListener('mouseout', handleHover.bind(1));
+
+//EVENTHANDLER STICKY NAVIGATION
+// //-->#1version
+// const initialCoords = section1.getBoundingClientRect();
+// console.log(initialCoords);
+// window.addEventListener('scroll', function () {
+//   console.log(window.scrollY); //WINDOW SCROLL EVENT IS COUNTER PERFORMANCE , WE WOULD NEED BETTER WAY OF DYNAMICLY CALCULATING THE POS WHICH IS INTERSECTION OBSERVER API
+
+//   if (window.scrollY > initialCoords.top)
+//     navBarContainer.classList.add('sticky');
+//   else navBarContainer.classList.remove('sticky');
+// });
+
+//-->#2version INTERSECTION OBSERVER API
+//-->OBSERVER CALLBACK FUNCTION @ THRESHOLDS
+const stickyNav_callback = function (entries) {
+  const [entry] = entries; // take out the entry from the array object. SAME AS entry = entries[0]
+  // console.log(entry); //entry is the object inside array
+
+  if (!entry.isIntersecting) navBarContainer.classList.add('sticky');
+  else navBarContainer.classList.remove('sticky');
+};
+//-->GET THE NAVBAR HEIGHT FOR ROOTMARGIN OPTION
+const navHeight = navBarContainer.getBoundingClientRect().height;
+console.log(navHeight);
+//-->CREATE OBSERVER WITH OPTIONS
+const headerObserver = new IntersectionObserver(stickyNav_callback, {
+  root: null, //the parent element that is used for checking visibility of the target element
+  threshold: 0, //when the header enters to window at 0% - no delay
+  // rootMargin: '-90px', //executes the function before/after certain margin off.
+  rootMargin: `-${navHeight}px`, //executes the function before/after certain margin off.
+});
+//-->PROVIDE A TARGET FOR THE OBSERVER
+headerObserver.observe(header);

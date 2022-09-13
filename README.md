@@ -7,13 +7,16 @@
 ### **Objective:** Create a landing web page for a fictitious Bank called 'Bankist'
 
 - Explore advanced DOM Events
-  - Make multiple instances of an event listener via queryselectorAll() nodelist and forEach() method
-  - Explore a better alternative of distributing instances of event listeners : Event delegation, closest()
+
+  - Make multiple instances of an event listener
+    - Via queryselectorAll() nodelist and forEach() method
+    - Via event delegation, closest()
   - Create smooth scrolling link
     - Old school: getBoundingClientRect(), scrollTo(), window.scrollX/scrollY
     - Modern Implementation: scrollIntoView()
+  - Create a sticky nav bar via Intersection Observer API
 
-&emsp;
+    &emsp;
 
 #### Link to Project &rarr; [Bankist website](https://bankist-erhan-ertem.netlify.app)
 
