@@ -32,12 +32,12 @@ const closeModal = function () {
 // for (let i = 0; i < btnsOpenModal.length; i++)
 //   btnsOpenModal[i].addEventListener('click', openModal);
 //Make instances of addEventListeners thruout the page per the node list of queryselectorall()
-//-->WHEN CLICKED ON BTNS, OPEN MODAL
+//--> WHEN CLICKED ON BTNS, OPEN MODAL
 btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
-//-->WHEN CLICKED ON BTN OR ANYPLACE OUTSIDE THE MODAL, CLOSE MODAL
+//--> WHEN CLICKED ON BTN OR ANYPLACE OUTSIDE THE MODAL, CLOSE MODAL
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
-//-->WHEN CLICKED ESC AND MODAL IS NOT MARKED HIDDEN, CLOSE MODAL
+//--> WHEN CLICKED ESC AND MODAL IS NOT MARKED HIDDEN, CLOSE MODAL
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
@@ -103,25 +103,25 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 
 //EVENTHANDLER TABBED COMPONENT
 
-//-->WATCH FOR CLICKS IN THE REALM OF THE DIV CONTAINER (PARENT) WRAPPING BTNS
+//--> WATCH FOR CLICKS IN THE REALM OF THE DIV CONTAINER (PARENT) WRAPPING BTNS
 tabsContainer.addEventListener('click', function (e) {
   // if (e.target.classList.contains('operations__tab')) {
   //   const clicked = e.target;
   //   console.log(clicked);
   // }
-  //-->WORK ALL THE WAY DEEPER TO BTNS AND SCREEN FOR BTN CLICKS VIA CLOSEST
+  //--> WORK ALL THE WAY DEEPER TO BTNS AND SCREEN FOR BTN CLICKS VIA CLOSEST
   //VERY IMPORTANT! WE NEEDED CLOSEST() METHOD AS BTNS ALSO IUNCLUDED SPAN ELEMENT INSIDE AND WE NEEDED ALWAYS THE BTN ELEMENT EVEN IF SPAN ELEMENT IS ALSO CLICKED!!
   const clicked = e.target.closest('.operations__tab');
   // console.log(clicked);
-  //-->CHECK FOR NULL CLICKS EXCLUDING BTNS
+  //--> CHECK FOR NULL CLICKS EXCLUDING BTNS
   if (!clicked) return; //VERY IMPORTANT! GUARD CLAUSE - PREVENTS ERR DUE TO CLICKING OUTSIDE THE BUTTONS BUT STILL INTHE CONTAINER AREA
-  //-->CLEAR CLASS ACTIVE ON ALL BTNS
+  //--> CLEAR CLASS ACTIVE ON ALL BTNS
   tabs.forEach(el => el.classList.remove('operations__tab--active'));
-  //-->ASSIGN ACTIVE TO BTN CLICKED
+  //--> ASSIGN ACTIVE TO BTN CLICKED
   clicked.classList.add('operations__tab--active');
-  //-->CLEAR CLASS ACTIVE ON ALL CONTENT AREAS
+  //--> CLEAR CLASS ACTIVE ON ALL CONTENT AREAS
   tabsContent.forEach(i => i.classList.remove('operations__content--active'));
-  //-->ACTIVATE THE CORRESPONDING CONTENT AREA
+  //--> ACTIVATE THE CORRESPONDING CONTENT AREA
   document
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
@@ -129,16 +129,16 @@ tabsContainer.addEventListener('click', function (e) {
 
 //FUNCTION MENU FADE ANIMATION
 //THIS IS THE WAY TO GO TO REFACTOR THE CODE BY USING COMMON VARIABLES
-//-->#1 version
+//--> #1 version
 // const handleHover = function (e, opacity) {
 //   if (e.target.classList.contains('nav__link')) {
 //     const hovered = e.target;
-//     //-->DIM THE UNHOVERED BTNS
+//     //--> DIM THE UNHOVERED BTNS
 //     const notHovered = hovered.closest('.nav').querySelectorAll('.nav__link'); //VERY IMPORTANT! MOVE UP TO NAV PARENT VIA CLOSEST() AND FROM THERE SELECT ALL
 //     notHovered.forEach(el => {
 //       if (el !== hovered) el.style.opacity = opacity;
 //     });
-//     //-->DIM THE LOGO
+//     //--> DIM THE LOGO
 //     const logo = hovered.closest('.nav').querySelector('img'); //ROLL UP TO PARENT ELEMENT AND FROM THERE SELECT ANY IMG TAG - LOGO
 //     logo.style.opacity = opacity;
 //   }
@@ -147,12 +147,12 @@ tabsContainer.addEventListener('click', function (e) {
 const handleHover = function (e) {
   if (e.target.classList.contains('nav__link')) {
     const hovered = e.target;
-    //-->DIM THE UNHOVERED BTNS
+    //--> DIM THE UNHOVERED BTNS
     const notHovered = hovered.closest('.nav').querySelectorAll('.nav__link'); //VERY IMPORTANT! MOVE UP TO NAV PARENT VIA CLOSEST() AND FROM THERE SELECT ALL
     notHovered.forEach(el => {
       if (el !== hovered) el.style.opacity = this;
     });
-    //-->DIM THE LOGO
+    //--> DIM THE LOGO
     const logo = hovered.closest('.nav').querySelector('img'); //ROLL UP TO PARENT ELEMENT AND FROM THERE SELECT ANY IMG TAG - LOGO
     logo.style.opacity = this;
   }
@@ -160,7 +160,7 @@ const handleHover = function (e) {
 
 //EVENTHANDLER MENU FADE ANIMATION
 //DESCRIPTION: THE EXTEND OF THE ANIMATION EFFECT INCLUDES THE BANKIST LOGO AND SHOULD WORK ALL THE WAY DOWN TO THE BTNS WITH A FADE IN OUT EFFECT WHEN BTNS ARE HOVERED ON.
-//-->WATCH FOR MOUSEOVER IN THE REALM OF THE NAV CONTAINER (PARENT) WRAPPING BTNS
+//--> WATCH FOR MOUSEOVER IN THE REALM OF THE NAV CONTAINER (PARENT) WRAPPING BTNS
 // #1
 // navBarContainer.addEventListener('mouseover', function (e) {
 //   handleHover(e, 0.5);
@@ -168,7 +168,7 @@ const handleHover = function (e) {
 // #2
 navBarContainer.addEventListener('mouseover', handleHover.bind(0.5));
 
-//-->WATCH FOR MOUSEOUT IN THE REALM OF THE NAV CONTAINER (PARENT) WRAPPING BTNS
+//--> WATCH FOR MOUSEOUT IN THE REALM OF THE NAV CONTAINER (PARENT) WRAPPING BTNS
 // #1
 // navBarContainer.addEventListener('mouseout', function (e) {
 //   handleHover(e, 1);
@@ -176,8 +176,8 @@ navBarContainer.addEventListener('mouseover', handleHover.bind(0.5));
 // #2
 navBarContainer.addEventListener('mouseout', handleHover.bind(1));
 
-//EVENTHANDLER STICKY NAVIGATION
-// //-->#1version
+//OBSERVER STICKY NAVIGATION
+// //--> #1version
 // const initialCoords = section1.getBoundingClientRect();
 // console.log(initialCoords);
 // window.addEventListener('scroll', function () {
@@ -188,8 +188,8 @@ navBarContainer.addEventListener('mouseout', handleHover.bind(1));
 //   else navBarContainer.classList.remove('sticky');
 // });
 
-//-->#2version INTERSECTION OBSERVER API
-//-->OBSERVER CALLBACK FUNCTION @ THRESHOLDS
+//--> #2version INTERSECTION OBSERVER API
+//--> OBSERVER CALLBACKFUNCTION @ THRESHOLDS
 const stickyNav_callback = function (entries) {
   const [entry] = entries; // take out the entry from the array object. SAME AS entry = entries[0]
   // console.log(entry); //entry is the object inside array
@@ -197,15 +197,39 @@ const stickyNav_callback = function (entries) {
   if (!entry.isIntersecting) navBarContainer.classList.add('sticky');
   else navBarContainer.classList.remove('sticky');
 };
-//-->GET THE NAVBAR HEIGHT FOR ROOTMARGIN OPTION
+//--> GET THE NAVBAR HEIGHT FOR ROOTMARGIN OPTION
 const navHeight = navBarContainer.getBoundingClientRect().height;
 console.log(navHeight);
-//-->CREATE OBSERVER WITH OPTIONS
+//--> CREATE OBSERVER WITH OPTIONS
 const headerObserver = new IntersectionObserver(stickyNav_callback, {
   root: null, //the parent element that is used for checking visibility of the target element
   threshold: 0, //when the header enters to window at 0% - no delay
   // rootMargin: '-90px', //executes the function before/after certain margin off.
   rootMargin: `-${navHeight}px`, //executes the function before/after certain margin off.
 });
-//-->PROVIDE A TARGET FOR THE OBSERVER
+//--> PROVIDE A TARGET FOR THE OBSERVER
 headerObserver.observe(header);
+
+//OBSERVER REVEAL SECTION ANIMATIONS
+
+const allSections = document.querySelectorAll('.section');
+
+//--> OBSERVER CALLBACKFUNCTION @ THRESHOLD
+const revealSection_callback = function (entries, observer) {
+  const [entry] = entries;
+  // console.log(entry);
+  // console.log(entry.target);
+  if (!entry.isIntersecting) return; //GUARD CLAUSE
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target); //VERY IMPORTANT! stops observing the target entry again! This is also when the callback is required to have observer as an argument.
+};
+//--> CREATE OBSERVER WITH OPTIONS
+const sectionObserver = new IntersectionObserver(revealSection_callback, {
+  root: null, //null-->viewport
+  threshold: 0.15, //callback triggred @ 15% visible
+});
+//--> PROVIDE MULTIPLE TARGETS FOR THE OBSERVER
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});

@@ -9,12 +9,12 @@
 - Explore advanced DOM Events
 
   - Make multiple instances of an event listener
-    - Via queryselectorAll() nodelist and forEach() method
-    - Via event delegation, closest()
+    - via queryselectorAll() nodelist and forEach() method
+    - via event delegation, closest()
   - Create smooth scrolling link
     - Old school: getBoundingClientRect(), scrollTo(), window.scrollX/scrollY
     - Modern Implementation: scrollIntoView()
-  - Create a sticky nav bar via Intersection Observer API
+  - Create a sticky nav bar (single entry), reveal elements on scroll (multiple entries) via Intersection Observer API
 
     &emsp;
 
