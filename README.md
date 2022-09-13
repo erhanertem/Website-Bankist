@@ -14,7 +14,7 @@
   - Create smooth scrolling link
     - Old school: getBoundingClientRect(), scrollTo(), window.scrollX/scrollY
     - Modern Implementation: scrollIntoView()
-  - Create a sticky nav bar (single entry), reveal elements on scroll (multiple entries) via Intersection Observer API
+  - Create a sticky nav bar (single entry), reveal elements on scroll (multiple entries), lazyloading images (multiple entries with custom attribute transpose) via Intersection Observer API
 
     &emsp;
 

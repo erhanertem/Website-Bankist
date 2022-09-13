@@ -199,7 +199,7 @@ const stickyNav_callback = function (entries) {
 };
 //--> GET THE NAVBAR HEIGHT FOR ROOTMARGIN OPTION
 const navHeight = navBarContainer.getBoundingClientRect().height;
-console.log(navHeight);
+// console.log(navHeight);
 //--> CREATE OBSERVER WITH OPTIONS
 const headerObserver = new IntersectionObserver(stickyNav_callback, {
   root: null, //the parent element that is used for checking visibility of the target element
@@ -232,4 +232,33 @@ const sectionObserver = new IntersectionObserver(revealSection_callback, {
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
+});
+
+//OBSERVER LAZY LOADING IMAGES
+
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+//--> OBSERVER CALLBACKFUNCTION @ THRESHOLD
+const loadImg_callback = function (entries, observer) {
+  const [entry] = entries;
+  // console.log(entry);
+  if (!entry.isIntersecting) return; //GUARD CLAUSE
+  //Replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+  //wait for the loading of the img before removing the blur on the low-res img
+  entry.target.addEventListener('load', function () {
+    //remove blur css property off the img element
+    entry.target.classList.remove('lazy-img');
+  });
+};
+
+//--> CREATE OBSERVER WITH OPTIONS
+const imgObserver = new IntersectionObserver(loadImg_callback, {
+  root: null,
+  threshold: 1,
+  rootMargin: '-100px',
+});
+//--> PROVIDE MULTIPLE TARGETS FOR THE OBSERVER
+imgTargets.forEach(function (img) {
+  imgObserver.observe(img);
 });
