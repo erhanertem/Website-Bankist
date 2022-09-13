@@ -89,27 +89,28 @@ btnScrollTo.addEventListener('click', function (e) {
 //1.ADD EVENT LISTENER TO COMMON PARENT ELEMENT
 //2.DETERMINE WHAT ELEMENT ORIGINATED THE EVENT
 document.querySelector('.nav__links').addEventListener('click', function (e) {
-  console.log(e.target);
+  // console.log(e.target);
   e.preventDefault(); //ignores href elements inside HTML definitions
   //Matching strategy
   if (e.target.classList.contains('nav__link')) {
     const hrefid = e.target.getAttribute('href');
-    console.log(hrefid);
+    // console.log(hrefid);
     document.querySelector(hrefid).scrollIntoView({ behavior: 'smooth' }); // Modern way of smooth scrolling
   }
 });
 
 //EVENTHANDLER TABBED COMPONENT
 
-//-->WATCH ON CLICKS IN THE REALM OF THE DIV CONTAINER (PARENT) WRAPPING BTNS
+//-->WATCH FOR CLICKS IN THE REALM OF THE DIV CONTAINER (PARENT) WRAPPING BTNS
 tabsContainer.addEventListener('click', function (e) {
   // if (e.target.classList.contains('operations__tab')) {
   //   const clicked = e.target;
   //   console.log(clicked);
   // }
   //-->WORK ALL THE WAY DEEPER TO BTNS AND SCREEN FOR BTN CLICKS VIA CLOSEST
+  //VERY IMPORTANT! WE NEEDED CLOSEST() METHOD AS BTNS ALSO IUNCLUDED SPAN ELEMENT INSIDE AND WE NEEDED ALWAYS THE BTN ELEMENT EVEN IF SPAN ELEMENT IS ALSO CLICKED!!
   const clicked = e.target.closest('.operations__tab');
-  console.log(clicked);
+  // console.log(clicked);
   //-->CHECK FOR NULL CLICKS EXCLUDING BTNS
   if (!clicked) return; //VERY IMPORTANT! GUARD CLAUSE - PREVENTS ERR DUE TO CLICKING OUTSIDE THE BUTTONS BUT STILL INTHE CONTAINER AREA
   //-->CLEAR CLASS ACTIVE ON ALL BTNS
@@ -122,4 +123,37 @@ tabsContainer.addEventListener('click', function (e) {
   document
     .querySelector(`.operations__content--${clicked.dataset.tab}`)
     .classList.add('operations__content--active');
+});
+
+//EVENTHANDLER MENU FADE ANIMATION
+//DESCRIPTION: THE EXTEND OF THE ANIMATION EFFECT INCLUDES THE BANKIST LOGO AND SHOULD WORK ALL THE WAY DOWN TO THE BTNS WITH A FADE IN OUT EFFECT WHEN BTNS ARE HOVERED ON.
+const navBarContainer = document.querySelector('.nav');
+
+//-->WATCH FOR MOUSEOVER IN THE REALM OF THE NAV CONTAINER (PARENT) WRAPPING BTNS
+navBarContainer.addEventListener('mouseover', function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const hovered = e.target;
+    //-->DIM THE UNHOVERED BTNS
+    const notHovered = hovered.closest('.nav').querySelectorAll('.nav__link'); //VERY IMPORTANT! MOVE UP TO NAV PARENT VIA CLOSEST() AND FROM THERE SELECT ALL
+    notHovered.forEach(el => {
+      if (el !== hovered) el.style.opacity = 0.5;
+    });
+    //-->DIM THE LOGO
+    const logo = hovered.closest('.nav').querySelector('img'); //ROLL UP TO PARENT ELEMENT AND FROM THERE SELECT ANY IMG TAG - LOGO
+    logo.style.opacity = 0.5;
+  }
+});
+//-->WATCH FOR MOUSEOUT IN THE REALM OF THE NAV CONTAINER (PARENT) WRAPPING BTNS
+navBarContainer.addEventListener('mouseout', function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const hovered = e.target;
+    //-->DIM THE UNHOVERED BTNS
+    const notHovered = hovered.closest('.nav').querySelectorAll('.nav__link'); //VERY IMPORTANT! MOVE UP TO NAV PARENT VIA CLOSEST() AND FROM THERE SELECT ALL
+    notHovered.forEach(el => {
+      if (el !== hovered) el.style.opacity = 1;
+    });
+    //-->DIM THE LOGO
+    const logo = hovered.closest('.nav').querySelector('img'); //ROLL UP TO PARENT ELEMENT AND FROM THERE SELECT ANY IMG TAG - LOGO
+    logo.style.opacity = 1;
+  }
 });
