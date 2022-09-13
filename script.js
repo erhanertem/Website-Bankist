@@ -125,35 +125,55 @@ tabsContainer.addEventListener('click', function (e) {
     .classList.add('operations__content--active');
 });
 
+//FUNCTION MENU FADE ANIMATION
+//THIS IS THE WAY TO GO TO REFACTOR THE CODE BY USING COMMON VARIABLES
+
+// #1 version
+// const handleHover = function (e, opacity) {
+//   if (e.target.classList.contains('nav__link')) {
+//     const hovered = e.target;
+//     //-->DIM THE UNHOVERED BTNS
+//     const notHovered = hovered.closest('.nav').querySelectorAll('.nav__link'); //VERY IMPORTANT! MOVE UP TO NAV PARENT VIA CLOSEST() AND FROM THERE SELECT ALL
+//     notHovered.forEach(el => {
+//       if (el !== hovered) el.style.opacity = opacity;
+//     });
+//     //-->DIM THE LOGO
+//     const logo = hovered.closest('.nav').querySelector('img'); //ROLL UP TO PARENT ELEMENT AND FROM THERE SELECT ANY IMG TAG - LOGO
+//     logo.style.opacity = opacity;
+//   }
+// };
+
+// #2 version
+const handleHover = function (e) {
+  if (e.target.classList.contains('nav__link')) {
+    const hovered = e.target;
+    //-->DIM THE UNHOVERED BTNS
+    const notHovered = hovered.closest('.nav').querySelectorAll('.nav__link'); //VERY IMPORTANT! MOVE UP TO NAV PARENT VIA CLOSEST() AND FROM THERE SELECT ALL
+    notHovered.forEach(el => {
+      if (el !== hovered) el.style.opacity = this;
+    });
+    //-->DIM THE LOGO
+    const logo = hovered.closest('.nav').querySelector('img'); //ROLL UP TO PARENT ELEMENT AND FROM THERE SELECT ANY IMG TAG - LOGO
+    logo.style.opacity = this;
+  }
+};
+
 //EVENTHANDLER MENU FADE ANIMATION
 //DESCRIPTION: THE EXTEND OF THE ANIMATION EFFECT INCLUDES THE BANKIST LOGO AND SHOULD WORK ALL THE WAY DOWN TO THE BTNS WITH A FADE IN OUT EFFECT WHEN BTNS ARE HOVERED ON.
 const navBarContainer = document.querySelector('.nav');
 
 //-->WATCH FOR MOUSEOVER IN THE REALM OF THE NAV CONTAINER (PARENT) WRAPPING BTNS
-navBarContainer.addEventListener('mouseover', function (e) {
-  if (e.target.classList.contains('nav__link')) {
-    const hovered = e.target;
-    //-->DIM THE UNHOVERED BTNS
-    const notHovered = hovered.closest('.nav').querySelectorAll('.nav__link'); //VERY IMPORTANT! MOVE UP TO NAV PARENT VIA CLOSEST() AND FROM THERE SELECT ALL
-    notHovered.forEach(el => {
-      if (el !== hovered) el.style.opacity = 0.5;
-    });
-    //-->DIM THE LOGO
-    const logo = hovered.closest('.nav').querySelector('img'); //ROLL UP TO PARENT ELEMENT AND FROM THERE SELECT ANY IMG TAG - LOGO
-    logo.style.opacity = 0.5;
-  }
-});
+// #1
+// navBarContainer.addEventListener('mouseover', function (e) {
+//   handleHover(e, 0.5);
+// });
+// #2
+navBarContainer.addEventListener('mouseover', handleHover.bind(0.5));
+
 //-->WATCH FOR MOUSEOUT IN THE REALM OF THE NAV CONTAINER (PARENT) WRAPPING BTNS
-navBarContainer.addEventListener('mouseout', function (e) {
-  if (e.target.classList.contains('nav__link')) {
-    const hovered = e.target;
-    //-->DIM THE UNHOVERED BTNS
-    const notHovered = hovered.closest('.nav').querySelectorAll('.nav__link'); //VERY IMPORTANT! MOVE UP TO NAV PARENT VIA CLOSEST() AND FROM THERE SELECT ALL
-    notHovered.forEach(el => {
-      if (el !== hovered) el.style.opacity = 1;
-    });
-    //-->DIM THE LOGO
-    const logo = hovered.closest('.nav').querySelector('img'); //ROLL UP TO PARENT ELEMENT AND FROM THERE SELECT ANY IMG TAG - LOGO
-    logo.style.opacity = 1;
-  }
-});
+// #1
+// navBarContainer.addEventListener('mouseout', function (e) {
+//   handleHover(e, 1);
+// });
+// #2
+navBarContainer.addEventListener('mouseout', handleHover.bind(1));
