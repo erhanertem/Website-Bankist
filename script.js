@@ -14,6 +14,9 @@ const navBarContainer = document.querySelector('.nav');
 const header = document.querySelector('.header');
 const allSections = document.querySelectorAll('.section');
 const imgTargets = document.querySelectorAll('img[data-src]');
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
 
 //FUNCTION MODAL OPEN
 const openModal = function (e) {
@@ -192,7 +195,7 @@ navBarContainer.addEventListener('mouseout', handleHover.bind(1));
 
 //--> #2version INTERSECTION OBSERVER API
 //--> OBSERVER CALLBACKFUNCTION @ THRESHOLDS
-const stickyNav_callback = function (entries) {
+const stickyNav_callback = function (entries, observer) {
   const [entry] = entries; // take out the entry from the array object. SAME AS entry = entries[0]
   // console.log(entry); //entry is the object inside array
 
@@ -220,7 +223,7 @@ const revealSection_callback = function (entries, observer) {
   // console.log(entry.target);
   if (!entry.isIntersecting) return; //GUARD CLAUSE
   entry.target.classList.remove('section--hidden');
-  observer.unobserve(entry.target); //VERY IMPORTANT! stops observing the target entry again! This is also when the callback is required to have observer as an argument.
+  observer.unobserve(entry.target); //VERY IMPORTANT! stops observing the target entry again! This is also the time when the callback is required to have observer as an argument.
 };
 //--> CREATE OBSERVER WITH OPTIONS
 const sectionObserver = new IntersectionObserver(revealSection_callback, {
@@ -230,7 +233,7 @@ const sectionObserver = new IntersectionObserver(revealSection_callback, {
 //--> PROVIDE MULTIPLE TARGETS FOR THE OBSERVER
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
 });
 
 //OBSERVER LAZY LOADING IMAGES
@@ -256,4 +259,88 @@ const imgObserver = new IntersectionObserver(loadImg_callback, {
 //--> PROVIDE MULTIPLE TARGETS FOR THE OBSERVER
 imgTargets.forEach(function (img) {
   imgObserver.observe(img);
+});
+
+//SLIDER COMPONENT
+//FUNCTION SLIDER
+const goToSlide = function (s) {
+  slides.forEach(
+    (slide, index) =>
+      (slide.style.transform = `translateX(${100 * (index - s)}%)`)
+  );
+};
+//FUNCTION SLIDER NEXT_SLIDE
+const nextSlide = function () {
+  if (currentSlide === maxSlide - 1) {
+    currentSlide = 0;
+  } else {
+    currentSlide++;
+    // console.log(currentSlide);
+  }
+  // slides.forEach(
+  //   (slide, index) =>
+  //     (slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`)
+  // );
+  // POS LAYOUT ORIGINAL     : *000%,  100%,  200%, 300%
+  //                                                    /1
+  // POS LAYOUT *************: -100%,  000%,  100%, 200%
+  //                                                    /2
+  // POS LAYOUT *************: -200%, -100%,  000%, 100%
+  //                                                    /3
+  // POS LAYOUT *************: -300%, -200%, -100%, 000%
+  //                                                    /4
+  // POS LAYOUT *************: *000%,  100%,  200%, 300%
+  //Refactored code into a function
+  goToSlide(currentSlide);
+};
+//FUNCTION SLIDER PREVIOUS_SLIDE
+const previousSlide = function () {
+  if (currentSlide === 0) {
+    currentSlide = maxSlide - 1;
+  } else {
+    currentSlide--;
+    // console.log(currentSlide);
+  }
+  // slides.forEach(
+  //   (slide, index) =>
+  //     (slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`)
+  // );
+  // POS LAYOUT ORIGINAL     : *000%,  100%,  200%, 300%
+  //                                                    /1
+  // POS LAYOUT *************: -100%,  000%,  100%, 200%
+  //                                                    /2
+  // POS LAYOUT *************: -200%, -100%,  000%, 100%
+  //                                                    /3
+  // POS LAYOUT *************: -300%, -200%, -100%, 000%
+  //                                                    /4
+  // POS LAYOUT *************: *000%,  100%,  200%, 300%
+  //Refactored code into a function
+  goToSlide(currentSlide);
+};
+
+//EVENTHANDLER SLIDER <-- -->
+// //TEMP TESTING PURPOSES ONLY
+// const slider = document.querySelector('.slider');
+// slider.style.transform = 'scale(0.4) translateX(-800px)';
+// slider.style.overflow = 'visible';
+//--> SLIDE POSITIONS @ INITIAL STAGE
+let currentSlide = 0;
+const maxSlide = slides.length;
+// slides.forEach(
+//   (slide, index) => (slide.style.transform = `translateX(${100 * index}%)`)
+// );
+// POS LAYOUTS: 0%, 100%, 200%, 300%
+//Refactored code into a function
+goToSlide(0);
+//--> SLIDE POSITIONS @ RIGHTBTN & LEFTBTN
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', previousSlide);
+//--> SLIDE POSITIONS @ RIGHTKEY & LEFTKEY
+document.addEventListener('keydown', function (e) {
+  console.log(e);
+  if (e.key === 'ArrowLeft') {
+    previousSlide();
+  } else if (e.key === 'ArrowRight') {
+    nextSlide();
+  }
 });
