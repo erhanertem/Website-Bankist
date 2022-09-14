@@ -17,6 +17,7 @@ const imgTargets = document.querySelectorAll('img[data-src]');
 const slides = document.querySelectorAll('.slide');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
+const dotContainer = document.querySelector('.dots');
 
 //FUNCTION MODAL OPEN
 const openModal = function (e) {
@@ -292,6 +293,7 @@ const nextSlide = function () {
   // POS LAYOUT *************: *000%,  100%,  200%, 300%
   //Refactored code into a function
   goToSlide(currentSlide);
+  activateDot(currentSlide);
 };
 //FUNCTION SLIDER PREVIOUS_SLIDE
 const previousSlide = function () {
@@ -316,6 +318,7 @@ const previousSlide = function () {
   // POS LAYOUT *************: *000%,  100%,  200%, 300%
   //Refactored code into a function
   goToSlide(currentSlide);
+  activateDot(currentSlide);
 };
 
 //EVENTHANDLER SLIDER <-- -->
@@ -337,10 +340,48 @@ btnRight.addEventListener('click', nextSlide);
 btnLeft.addEventListener('click', previousSlide);
 //--> SLIDE POSITIONS @ RIGHTKEY & LEFTKEY
 document.addEventListener('keydown', function (e) {
-  console.log(e);
-  if (e.key === 'ArrowLeft') {
-    previousSlide();
-  } else if (e.key === 'ArrowRight') {
-    nextSlide();
+  // console.log(e);
+  //#1.alternate
+  // if (e.key === 'ArrowLeft') {
+  //   previousSlide();
+  // } else if (e.key === 'ArrowRight') {
+  //   nextSlide();
+  // }
+  //#2.alternate
+  if (e.key === 'ArrowLeft') previousSlide();
+  e.key === 'ArrowRight' && nextSlide(); //short-circuit logic
+});
+
+//FUNCTION CREATE SLIDER DOTS
+function createDots() {
+  slides.forEach(function (_, i) {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+}
+
+//FUNCTION ACTIVATE SLIDER DOT
+function activateDot(slide) {
+  //--> Deactivate DOTS
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+  //--> Activate the DOT
+  dotContainer.children[slide].classList.add('dots__dot--active');
+}
+
+//EVENTHANDLER SLIDER DOT NAV
+//--> CREATE THE DOT NAV FROM SLIDER CONTENT
+createDots();
+//--> GOTOSLIDE @ DOT CLICK
+dotContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    // console.log(e.target);
+    const { slide } = e.target.dataset;
+    // console.log(slide);
+    goToSlide(slide);
+    activateDot(slide);
   }
 });

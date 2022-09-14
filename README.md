@@ -6,6 +6,8 @@
 
 ### **Objective:** Create a landing web page for a fictitious Bank called 'Bankist'
 
+<p>
+
 - Explore advanced DOM Events
 
   - Make multiple instances of an event listener
@@ -15,8 +17,10 @@
     - Old school: getBoundingClientRect(), scrollTo(), window.scrollX/scrollY
     - Modern Implementation: scrollIntoView()
   - Create a sticky nav bar (single entry), reveal elements on scroll (multiple entries), lazyloading images (multiple entries with custom attribute transpose) via Intersection Observer API
+  - Create full-fletched slider with arrow key, nav btns and dot btns navigations mediums
 
-    &emsp;
+</p>
+      &emsp;
 
 #### Link to Project &rarr; [Bankist website](https://bankist-erhan-ertem.netlify.app)
 
