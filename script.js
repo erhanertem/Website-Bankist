@@ -258,7 +258,7 @@ imgTargets.forEach(function (img) {
   imgObserver.observe(img);
 });
 
-//COMPONENT START-OVER TYPE SLIDER OPTION #1
+// //COMPONENT START-OVER TYPE SLIDER OPTION #1
 // //FUNCTION SLIDER
 // const goToSlide = function (s) {
 //   slides.forEach(
@@ -380,174 +380,198 @@ imgTargets.forEach(function (img) {
 //   }
 // });
 
-//COMPONENT FLUENT TYPE SLIDER OPTION #2
+//COMPONENT SLIDER OPTION #3: CONTINOUS LOOP
 //TEMP TESTING PURPOSES ONLY
-// const slider = document.querySelector('.slider');
-// slider.style.transform = 'scale(0.4) translateX(-800px)';
-// slider.style.overflow = 'visible';
+const slider = document.querySelector('.slider');
+slider.style.transform = 'scale(0.4) translateX(-800px)';
+slider.style.overflow = 'visible';
 
 const sliderContainer = document.querySelector('.slider');
-const slides_alt = document.querySelector('.slider_alt');
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+const dotContainer = document.querySelector('.dots');
+const slideralt = document.querySelector('.slideralt');
 const slides = document.querySelectorAll('.slide');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
-const dotContainer = document.querySelector('.dots');
 
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-// const sliderContainer = document.querySelector('.slider__container');
 // //FUNCTIONS
 
-// const nextSlide = function () {
-//   // console.log('next');
-//   // if (counter >= slides.length - 1) return;
-//   counter++;
-//   console.log(counter);
-//   sliderContainer.style.transition = 'transform 0.4s ease-in-out';
-//   sliderContainer.style.transform = `translateX(${-slideSize * counter}px)`;
-//   activateDot(counter);
-// };
+const nextSlide = function () {
+  console.log('next');
+  console.log(slideShown);
+  // if (counter >= slides.length - 1) return;
+  slideShown++;
+  console.log(slideShown);
+  slideralt.style.transition = 'transform 0.4s ease-in-out';
+  slideralt.style.transform = `translateX(${-slideSize * slideShown}px)`;
+  activateDot(slideShown);
+};
 
-// const prevSlide = function () {
-//   // if (counter < 0) return;
-//   counter--;
-//   console.log(counter);
-//   sliderContainer.style.transition = 'transform 0.4s ease-in-out';
-//   sliderContainer.style.transform = `translateX(${slideSize * counter}px)`;
-//   activateDot(counter);
-// };
+const prevSlide = function () {
+  // if (slideShown < 0) return;
+  slideShown--;
+  console.log(slideShown);
+  slideralt.style.transition = 'transform 0.4s ease-in-out';
+  slideralt.style.transform = `translateX(${slideSize * slideShown}px)`;
+  activateDot(slideShown);
+};
 
-// const createDots = function () {
-//   for (let i = 0; i < slides.length; i++) {
-//     dotContainer.insertAdjacentHTML(
-//       'beforeend',
-//       `<button class="dots__dot" data-slide="${i + 1}"></button>`
-//     );
-//   }
-// };
-// const activateDot = function (slide) {
-//   //--> Slide counter overrun control
-//   if (slide > slides.length - 2) slide = 1;
-//   if (slide < 1) slide = slides.length - 2;
-//   //--> Kill all active dots
-//   document
-//     .querySelectorAll('.dots__dot')
-//     .forEach(dot => dot.classList.remove('dots__dot--active'));
-//   //--> Mark the active dot
-//   dotContainer.children[slide - 1].classList.add('dots__dot--active');
-//   // NOTE: Similarly same code as follows:
-//   //   document
-//   //     .querySelector(`.dots__dot[data-slide="${slide}"`)
-//   //     .classList.add('dots__dot--active');
-// };
+const gotoSlide = function (s) {
+  // if (s >= slides.length - 1) return;
+  slideralt.style.transition = 'transform 0.4s ease-in-out';
+  slideralt.style.transform = `translateX(${-slideSize * (s - 1)}px)`;
+};
 
-// //--> INITIALIZE SLIDES & DOTS
-// let counter = 1;
-// let slideSize = slides[0].clientWidth; //let instead of const is used so that we can make it responsive by the following code
-// // sliderContainer.style.transform = `translateX(${-size * counter}px)`;
-// console.log(slideSize);
-// window.addEventListener('resize', () => {
-//   sliderContainer.style.transition = 'none';
-//   slideSize = slides[0].clientWidth;
-//   sliderContainer.style.transform = `translateX(${-slideSize * counter}px)`;
-// });
-// createDots();
-// activateDot(counter);
+const createDots = function (number) {
+  for (let i = 0; i < number; i++) {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i + 1}"></button>`
+    );
+  }
+};
 
-// //EVENTHANDLER SLIDER <-- -->
-// btnRight.addEventListener('click', nextSlide);
-// btnLeft.addEventListener('click', prevSlide);
-// document.addEventListener('keydown', event => {
-//   // console.log(event, event.key);
-//   if (event.key === 'ArrowLeft') prevSlide;
-//   event.key === 'ArrowRight' && nextSlide;
-// });
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
+const activateDot = function (slide) {
+  //--> Slide counter overrun control
+  if (slide > slides.length - 2) slideShown = 1;
+  if (slide < 1) slideShown = slides.length - 2;
+  //--> Kill all active dots
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+  //--> Mark the active dot
+  // document
+  //   .querySelectorAll('.dots__dot')
+  //   [slide - 1].classList.add('dots__dot--active');
+  // NOTE: Similarly same code as follows:
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"`)
+    .classList.add('dots__dot--active');
+};
 
-//COMPONENT SLIDER OPTION #2: ALL JS CONTINUOUS LOOP
-let pseudoArr;
-//--> responsive slides width
-let slideSize = document.querySelectorAll('.slider_alt')[0].clientWidth; //let instead of const is used so that we can make it responsive by the following code
-console.log(slideSize);
-
-function renderSlides(limit) {
-  //--> ONLY 3 SLIDES AT A TIME REDUCED ARR
-  pseudoArr = slidesArr.slice().splice(0, limit);
-  // console.log(pseudoArr, slidesArr);
-  //--> INSERT SLIDE HTML
-  pseudoArr.forEach((value, index, arr) => {
-    slides_alt.insertAdjacentHTML('beforeend', contentArr[arr[index] - 1]);
-  });
-  //--> RENDER SLIDES ON SCREEN
-  slides_alt.querySelectorAll('.slide').forEach((value, index, arr) => {
-    arr[index].style.transform = `translateX(${
-      arr[index].clientWidth * (index + 1) - 2 * arr[0].clientWidth
-    }px)`;
-  });
-}
-
-function prevSlide(limit) {
-  //--> DECLARE NEW ARRAY AFTER PREV CLICK
-  slidesArr.forEach((value, index, arr) => {
-    arr[index] = arr[index] - 1;
-    if (!arr[index]) arr[index] = 4;
-  });
-  pseudoArr = slidesArr.slice().splice(0, limit);
-  // con
-  //--> ASSIGN THE FRONT ELEMENT TO HTML SLIDES
-  slides_alt.insertAdjacentHTML('afterbegin', contentArr[pseudoArr[0] - 1]);
-  //--> REMOVE THE LAST ELEMENT FROM THE HTML SLIDES
-  slides_alt.removeChild(slides_alt.lastChild);
-  //--> ASSIGN THE RECONFIGURED ELEMENT POSITIONS
-  slides_alt.querySelectorAll('.slide').forEach((value, index, arr) => {
-    arr[index].style.transform = `translateX(${-1000 + index * 1000}px)`;
-  });
-}
-
-function nextSlide(limit) {
-  //--> DECLARE NEW ARRAY AFTER NEXT CLICK
-  slidesArr.forEach((value, index, arr) => {
-    arr[index] = arr[index] + 1;
-    if (arr[index] === arr.length - 1) {
-      arr[index] = 1;
-    }
-  });
-  pseudoArr = slidesArr.slice().splice(0, limit);
-  // conso
-  //--> INSERT THE LAST ELEMENT
-  slides_alt.insertAdjacentHTML('beforeend', contentArr[pseudoArr.at(-1) - 1]);
-  //--> REMOVE THE FIRST ELEMENT
-  slides_alt.removeChild(slides_alt.firstChild);
-  //--> ASSIGN THE RECONFIGURED ELEMENT POSITIONS
-  slides_alt.querySelectorAll('.slide').forEach((value, index, arr) => {
-    arr[index].style.transform = `translateX(${-1000 + index * 1000}px)`;
-  });
-}
-
-//--> INTRODUCE THE SLDIER CONTENT
-let contentArr = [
-  `<div class="slide inner slide--1" data-arr="1"><img src="img/img-1copy.jpg" alt="Photo 1" /></div>`,
-  `<div class="slide inner slide--2" data-arr="2"><img src="img/img-2copy.jpg" alt="Photo 2" /></div>`,
-  `<div class="slide inner slide--3" data-arr="3"><img src="img/img-3copy.jpg" alt="Photo 3" /></div>`,
-  `<div class="slide inner slide--4" data-arr="4"><img src="img/img-4copy.jpg" alt="Photo 4" /></div>`,
-];
-//--> CREATE THE INITIAL SLIDE HELPER ARRAY
-const slidesArr = Array.from([]);
-//--> FILL THE INITIAL ARRAY
-for (let i = 0; i < contentArr.length; i++) {
-  slidesArr[i] = i + 1;
-}
-slidesArr.unshift(contentArr.length);
-slidesArr.push(1);
-console.log(`Your initial array:`, slidesArr);
-//--> INITIAL SLIDE RENDERING
-renderSlides(5);
+//--> INITIALIZE SLIDES & DOTS
+let slideShown = 1;
+slideralt.style.width = `${slides.length * 100}rem`;
+let slideSize = slides[slideShown].clientWidth; //let instead of const is used so that we can make it responsive by the following code
+window.addEventListener('resize', () => {
+  slideSize = slides[slideShown].clientWidth;
+  carouselSlide.style.transform = `translateX(${-slideSize * slideShown}px)`;
+});
+slides.forEach(
+  (html, index, arr) =>
+    (html.style.transform = `translateX(${-slideSize + slideSize * index}px)`)
+);
+createDots(slides.length - 2);
+activateDot(slideShown);
 
 //EVENTHANDLER SLIDER <-- -->
-btnLeft.addEventListener('click', () => prevSlide(5));
-btnRight.addEventListener('click', () => nextSlide(5));
+
+//--> FOR NEXT & PREV BTNS
+btnRight.addEventListener('click', () => nextSlide());
+btnLeft.addEventListener('click', () => prevSlide());
+
+//--> FOR KEYBOARD RIGHT AND LEFT BTNS
+document.addEventListener('keydown', event => {
+  if (event.key === 'ArrowLeft') prevSlide(); //NOTE: if and short circuiting same!
+  event.key === 'ArrowRight' && nextSlide();
+});
+//--> FOR DOT NAVIGATION
+dotContainer.addEventListener('click', event => {
+  if (event.target.classList.contains('dots__dot')) {
+    slideShown = event.target.dataset.slide;
+    activateDot(slideShown);
+    gotoSlide(slideShown);
+  }
+});
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+// //COMPONENT SLIDER OPTION #2: ALL JS CONTINUOUS LOOP
+// const slides_alt2 = document.querySelector('.slider_alt2');
+// let pseudoArr;
+// //--> responsive slides width
+// let slideSize = document.querySelectorAll('.slider_alt2')[0].clientWidth; //let instead of const is used so that we can make it responsive by the following code
+// console.log(slideSize);
+
+// function renderSlides(limit) {
+//   //--> ONLY 3 SLIDES AT A TIME REDUCED ARR
+//   pseudoArr = slidesArr.slice().splice(0, limit);
+//   // console.log(pseudoArr, slidesArr);
+//   //--> INSERT SLIDE HTML
+//   pseudoArr.forEach((value, index, arr) => {
+//     slides_alt2.insertAdjacentHTML('beforeend', contentArr[arr[index] - 1]);
+//   });
+//   //--> RENDER SLIDES ON SCREEN
+//   slides_alt2.querySelectorAll('.slide').forEach((value, index, arr) => {
+//     arr[index].style.transform = `translateX(${
+//       arr[index].clientWidth * (index + 1) - 2 * arr[0].clientWidth
+//     }px)`;
+//   });
+// }
+
+// function prevSlide(limit) {
+//   //--> DECLARE NEW ARRAY AFTER PREV CLICK
+//   slidesArr.forEach((value, index, arr) => {
+//     arr[index] = arr[index] - 1;
+//     if (!arr[index]) arr[index] = 4;
+//   });
+//   pseudoArr = slidesArr.slice().splice(0, limit);
+//   // con
+//   //--> ASSIGN THE FRONT ELEMENT TO HTML SLIDES
+//   slides_alt2.insertAdjacentHTML('afterbegin', contentArr[pseudoArr[0] - 1]);
+//   //--> REMOVE THE LAST ELEMENT FROM THE HTML SLIDES
+//   slides_alt2.removeChild(slides_alt2.lastChild);
+//   //--> ASSIGN THE RECONFIGURED ELEMENT POSITIONS
+//   slides_alt2.querySelectorAll('.slide').forEach((value, index, arr) => {
+//     arr[index].style.transform = `translateX(${-1000 + index * 1000}px)`;
+//   });
+// }
+
+// function nextSlide(limit) {
+//   //--> DECLARE NEW ARRAY AFTER NEXT CLICK
+//   slidesArr.forEach((value, index, arr) => {
+//     arr[index] = arr[index] + 1;
+//     if (arr[index] === arr.length - 1) {
+//       arr[index] = 1;
+//     }
+//   });
+//   pseudoArr = slidesArr.slice().splice(0, limit);
+//   // conso
+//   //--> INSERT THE LAST ELEMENT
+//   slides_alt2.insertAdjacentHTML('beforeend', contentArr[pseudoArr.at(-1) - 1]);
+//   //--> REMOVE THE FIRST ELEMENT
+//   slides_alt2.removeChild(slides_alt2.firstChild);
+//   //--> ASSIGN THE RECONFIGURED ELEMENT POSITIONS
+//   slides_alt2.querySelectorAll('.slide').forEach((value, index, arr) => {
+//     arr[index].style.transform = `translateX(${-1000 + index * 1000}px)`;
+//   });
+// }
+
+// //--> INTRODUCE THE SLDIER CONTENT
+// let contentArr = [
+//   `<div class="slide slide--1" ><img src="img/img-1copy.jpg" alt="Photo 1" /></div>`,
+//   `<div class="slide slide--2" ><img src="img/img-2copy.jpg" alt="Photo 2" /></div>`,
+//   `<div class="slide slide--3" ><img src="img/img-3copy.jpg" alt="Photo 3" /></div>`,
+//   `<div class="slide slide--4" ><img src="img/img-4copy.jpg" alt="Photo 4" /></div>`,
+// ];
+// //--> CREATE THE INITIAL SLIDE HELPER ARRAY
+// const slidesArr = Array.from([]);
+// //--> FILL THE INITIAL ARRAY
+// for (let i = 0; i < contentArr.length; i++) {
+//   slidesArr[i] = i + 1;
+// }
+// slidesArr.unshift(contentArr.length);
+// slidesArr.push(1);
+// console.log(`Your initial array:`, slidesArr);
+// //--> INITIAL SLIDE RENDERING
+// renderSlides(5);
+
+// //EVENTHANDLER SLIDER <-- -->
+// btnLeft.addEventListener('click', () => prevSlide(5));
+// btnRight.addEventListener('click', () => nextSlide(5));
