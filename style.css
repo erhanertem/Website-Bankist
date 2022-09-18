@@ -383,10 +383,18 @@ h4 {
   overflow: hidden;
 }
 
+.slider_alt2 {
+  display: flex;
+}
+
+.slideralt {
+  display: flex;
+}
+
 .slide {
   position: absolute;
   top: 0;
-  width: 100%;
+  width: 100rem;
   height: 50rem;
 
   display: flex;
@@ -459,7 +467,7 @@ h4 {
 
 .dots__dot--active {
   /* background-color: #fff; */
-  background-color: #888;
+  background-color: red;
   opacity: 1;
 }
 
