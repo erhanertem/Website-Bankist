@@ -376,23 +376,24 @@ h4 {
 .slider {
   max-width: 100rem;
   height: 50rem;
-  margin: 0 auto;
+  margin: auto;
   position: relative;
-
   /* IN THE END */
   overflow: hidden;
 }
-
-.slider_alt2 {
+.slider_alt3 {
   display: flex;
+  width: 100%;
+  height: inherit;
 }
+/* SLIDER */
 
-.slideralt {
+/* .slider_alt2 {
   display: flex;
-}
+} */
 
 .slide {
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   width: 100rem;
   height: 50rem;
@@ -407,8 +408,8 @@ h4 {
 
 .slide > img {
   /* Only for images that have different size than slide */
-  width: 100%;
-  height: 100%;
+  width: 100rem;
+  height: 50rem;
   object-fit: cover;
 }
 
@@ -467,7 +468,7 @@ h4 {
 
 .dots__dot--active {
   /* background-color: #fff; */
-  background-color: red;
+  background-color: #444;
   opacity: 1;
 }
 

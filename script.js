@@ -380,100 +380,51 @@ imgTargets.forEach(function (img) {
 //   }
 // });
 
-//COMPONENT SLIDER OPTION #3: CONTINOUS LOOP
 //TEMP TESTING PURPOSES ONLY
 const slider = document.querySelector('.slider');
-slider.style.transform = 'scale(0.4) translateX(-800px)';
+// slider.style.transform = 'scale(0.4) translateX(-800px)';
 slider.style.overflow = 'visible';
 
+/////////////////////////////////////////////////////////////
+//COMPONENT SLIDER OPTION #3: CONTINOUS LOOP/////////////////
+/////////////////////////////////////////////////////////////
 const sliderContainer = document.querySelector('.slider');
-
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
-const dotContainer = document.querySelector('.dots');
-const slideralt = document.querySelector('.slideralt');
+const slider_alt3 = document.querySelector('.slider_alt3');
 const slides = document.querySelectorAll('.slide');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
-
-// //FUNCTIONS
-
-const nextSlide = function () {
-  console.log('next');
-  console.log(slideShown);
-  // if (counter >= slides.length - 1) return;
-  slideShown++;
-  console.log(slideShown);
-  slideralt.style.transition = 'transform 0.4s ease-in-out';
-  slideralt.style.transform = `translateX(${-slideSize * slideShown}px)`;
-  activateDot(slideShown);
-};
-
-const prevSlide = function () {
-  // if (slideShown < 0) return;
-  slideShown--;
-  console.log(slideShown);
-  slideralt.style.transition = 'transform 0.4s ease-in-out';
-  slideralt.style.transform = `translateX(${slideSize * slideShown}px)`;
-  activateDot(slideShown);
-};
-
-const gotoSlide = function (s) {
-  // if (s >= slides.length - 1) return;
-  slideralt.style.transition = 'transform 0.4s ease-in-out';
-  slideralt.style.transform = `translateX(${-slideSize * (s - 1)}px)`;
-};
-
-const createDots = function (number) {
-  for (let i = 0; i < number; i++) {
-    dotContainer.insertAdjacentHTML(
-      'beforeend',
-      `<button class="dots__dot" data-slide="${i + 1}"></button>`
-    );
-  }
-};
-
-const activateDot = function (slide) {
-  //--> Slide counter overrun control
-  if (slide > slides.length - 2) slideShown = 1;
-  if (slide < 1) slideShown = slides.length - 2;
-  //--> Kill all active dots
-  document
-    .querySelectorAll('.dots__dot')
-    .forEach(dot => dot.classList.remove('dots__dot--active'));
-  //--> Mark the active dot
-  // document
-  //   .querySelectorAll('.dots__dot')
-  //   [slide - 1].classList.add('dots__dot--active');
-  // NOTE: Similarly same code as follows:
-  document
-    .querySelector(`.dots__dot[data-slide="${slide}"`)
-    .classList.add('dots__dot--active');
-};
+const dotContainer = document.querySelector('.dots');
 
 //--> INITIALIZE SLIDES & DOTS
-let slideShown = 1;
-slideralt.style.width = `${slides.length * 100}rem`;
-let slideSize = slides[slideShown].clientWidth; //let instead of const is used so that we can make it responsive by the following code
-window.addEventListener('resize', () => {
-  slideSize = slides[slideShown].clientWidth;
-  carouselSlide.style.transform = `translateX(${-slideSize * slideShown}px)`;
-});
-slides.forEach(
-  (html, index, arr) =>
-    (html.style.transform = `translateX(${-slideSize + slideSize * index}px)`)
-);
-createDots(slides.length - 2);
-activateDot(slideShown);
-
+let currSlide = 1;
+const numSlides = slides.length - 2;
+let slideSize = slides[currSlide].clientWidth;
+slider_alt3.style.transform = `translateX(${-slideSize * currSlide}px)`;
+// console.log(-slideSize * currSlide);
+createDots();
+activateDot(currSlide);
 //EVENTHANDLER SLIDER <-- -->
-
 //--> FOR NEXT & PREV BTNS
-btnRight.addEventListener('click', () => nextSlide());
-btnLeft.addEventListener('click', () => prevSlide());
-
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
+//--> AFTER EVERY TRANSITION COMPLETE AUTOCHECK CLONE ENDS TO DECIDE TO MOVE THE ENTIRE BLOCK
+slider_alt3.addEventListener('transitionend', () => {
+  // console.log('FIRED');
+  if (slides[currSlide].id === 'lastClone') {
+    currSlide = slides.length - 2;
+    // console.log('boom', currSlide);
+    slider_alt3.style.transition = 'none';
+    slider_alt3.style.transform = `translateX(${-slideSize * currSlide}px)`;
+    activateDot(currSlide);
+  }
+  if (slides[currSlide].id === 'firstClone') {
+    currSlide = slides.length - currSlide;
+    // console.log('boom', currSlide);
+    slider_alt3.style.transition = 'none';
+    slider_alt3.style.transform = `translateX(${-slideSize * currSlide}px)`;
+    activateDot(currSlide);
+  }
+});
 //--> FOR KEYBOARD RIGHT AND LEFT BTNS
 document.addEventListener('keydown', event => {
   if (event.key === 'ArrowLeft') prevSlide(); //NOTE: if and short circuiting same!
@@ -482,11 +433,56 @@ document.addEventListener('keydown', event => {
 //--> FOR DOT NAVIGATION
 dotContainer.addEventListener('click', event => {
   if (event.target.classList.contains('dots__dot')) {
-    slideShown = event.target.dataset.slide;
-    activateDot(slideShown);
-    gotoSlide(slideShown);
+    currSlide = event.target.dataset.slide;
+    activateDot(currSlide);
+    gotoSlide(currSlide);
   }
 });
+//FUNCTIONS
+function nextSlide() {
+  if (currSlide >= slides.length - 1) return;
+  currSlide++;
+  console.log(currSlide);
+  slider_alt3.style.transition = 'transform 0.3s ease-in-out';
+  slider_alt3.style.transform = `translateX(${-slideSize * currSlide}px)`;
+  activateDot(currSlide);
+}
+function prevSlide() {
+  if (currSlide <= 0) return;
+  currSlide--;
+  console.log(currSlide);
+  slider_alt3.style.transition = 'transform 0.3s ease-in-out';
+  slider_alt3.style.transform = `translateX(${-slideSize * currSlide}px)`;
+  activateDot(currSlide);
+}
+
+const gotoSlide = function (slide) {
+  slider_alt3.style.transition = 'transform 0.4s ease-in-out';
+  slider_alt3.style.transform = `translateX(${-slideSize * slide}px)`;
+};
+function createDots() {
+  for (let i = 0; i < numSlides; i++) {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i + 1}"></button>`
+    );
+  }
+}
+function activateDot(slide) {
+  if (currSlide > slides.length - 2 || !currSlide) return;
+  //--> Kill all active dots
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+  //--> Mark the active dot
+  // document
+  //   .querySelectorAll('.dots__dot')
+  //   [currSlide - 1].classList.add('dots__dot--active');
+  // NOTE: Similarly functionality burt different selection methods:
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"`)
+    .classList.add('dots__dot--active');
+}
 
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
