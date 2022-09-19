@@ -383,7 +383,7 @@ imgTargets.forEach(function (img) {
 //TEMP TESTING PURPOSES ONLY
 const slider = document.querySelector('.slider');
 // slider.style.transform = 'scale(0.4) translateX(-800px)';
-slider.style.overflow = 'visible';
+// slider.style.overflow = 'visible';
 
 /////////////////////////////////////////////////////////////
 //COMPONENT SLIDER OPTION #3: CONTINOUS LOOP/////////////////
@@ -400,7 +400,7 @@ let currSlide = 1;
 const numSlides = slides.length - 2;
 let slideSize = slides[currSlide].clientWidth;
 slider_alt3.style.transform = `translateX(${-slideSize * currSlide}px)`;
-// console.log(-slideSize * currSlide);
+console.log(-slideSize * currSlide);
 createDots();
 activateDot(currSlide);
 //EVENTHANDLER SLIDER <-- -->
