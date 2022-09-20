@@ -457,7 +457,7 @@ function prevSlide() {
 }
 
 const gotoSlide = function (slide) {
-  slider_alt3.style.transition = 'transform 0.4s ease-in-out';
+  slider_alt3.style.transition = 'transform 0.3s ease-in-out';
   slider_alt3.style.transform = `translateX(${-slideSize * slide}px)`;
 };
 function createDots() {

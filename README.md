@@ -19,7 +19,7 @@
   - Create a sticky nav bar (single entry), reveal elements on scroll (multiple entries), lazyloading images (multiple entries with custom attribute transpose) via Intersection Observer API
   - Create full-fletched slider with arrow key, nav btns and dot btns navigations mediums
     - Created a JS+HTML hybrid slider with rollback-to-start transition as originally instructed in this tutorial
-    - Aside the tutorial, provided 2nd solution: my own JS only solution which implements continuous img loop either direction
+    - Aside the tutorial, provided 2nd solution: my own JS only solution which implements continuous img loop either direction via array strategy
     - Aside the tutorial, provided 3rd solution: JS and HTML hybrid solution which implements continous loop either direction (Required CSS changes, addEventListener "transitionend" DOM event plays a crucial role in continous loop implementation)
 
 </p>
